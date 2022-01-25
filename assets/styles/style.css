@@ -4,13 +4,31 @@ body {
   line-height: 1;
 }
 
+.hide{visibility:hidden;}
+.show{visibility: visible;}
+
 textarea{
   background: transparent;
   border: none;
+  /* border:1px solid red; */
+  outline:none;
   resize: none;
   color: #000000;
-  border-left: 1px solid black;
-  padding: 10px;
+  /* border-left: 1px solid black; */
+  padding: 5px;
+  width:100%;
+  height:100%;
+  /* font-size:20px; */
+  margin-top:3px;
+  line-height:1.3em;
+}
+
+
+textarea:focus{
+  /* border:none; */
+  outline:none;
+  box-shadow:none;
+
 }
 
 .jumbotron {
