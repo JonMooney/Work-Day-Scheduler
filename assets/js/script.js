@@ -19,22 +19,21 @@ for(i=9;i<=17;i++){
     }
 }
 
+
+$(".description").click(function(){
+    var id = $(this).attr("id").replace("description-", "");
+    
+    if(!$("#textarea-" + id).length){
+        var newEl = document.createElement("textarea");
+        $(newEl).attr("id", "textarea-" + id)
+        $(this).append(newEl);
+        newEl.focus();
+    }
+});
+
+
+
 //Function to save entered text to localStorage
 $(".container").on("click", ".saveBtn", function(){
     console.log($(this).attr("id"));
-});
-
-$("#description-10").click(function(){
-    //console.log("clicked on 9AM");
-    //$(this).html("<textarea></textarea>");
-    //$("#textarea-10").addClass("show");
-    //var newEl = $(document)
-    console.log($("#textarea-10").length);
-    if(!$("#textarea-10").length){
-        var newEl = document.createElement("textarea");
-        $(newEl).attr("id", "textarea-10")
-        $(this).append(newEl);
-        newEl.focus();
-        console.log("creating textbox");
-    }
 });
