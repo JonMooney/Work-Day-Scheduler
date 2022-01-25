@@ -1,28 +1,27 @@
-//Script file
+// Work day scheduler
+// JS by Jon Mooney
 
 var schedule = [];
 
 //Place today's date at the top of the page
 document.getElementById("currentDay").innerHTML = moment().format("dddd, MMMM Do");
 
+// Bring in schedule info from localStorage into local object
 if( localStorage.getItem("schedule")){
     schedule = JSON.parse(localStorage.getItem("schedule"));
 }
 
-//Add colored backgrounds for past, current, and future hours
+// Load schedule data when present, and add colored backgrounds for past, current, and future hours
 for(i=9;i<=17;i++){
     if(schedule[i] != null){
         $("#description-" + i).html(schedule[i].desc);
     }
 
     if(i < moment().hour()){
-        console.log("before");
         $("#description-" + i).addClass("past");
     }else if(i == moment().hour()){
-        console.log("current hour - " + i);
         $("#description-" + i).addClass("present");
     }else{
-        console.log("upcoming hour");
         $("#description-" + i).addClass("future");
     }
 }
@@ -31,16 +30,12 @@ for(i=9;i<=17;i++){
 $(".description").click(function(){
     var id = $(this).attr("id").replace("description-", "");
 
-    // $("#description-" + id).css("padding", "5px");
-    
-
     if(!$("#textarea-" + id).length){
-        console.log("no textarea present");
         $(this).html("");
+
         var newEl = document.createElement("textarea");
         $(newEl).attr("id", "textarea-" + id);
         $(newEl).attr("rows", "3");
-        //$(this).html("");
         $(this).append(newEl);
 
         for(var i=9;i<schedule.length;i++){
@@ -60,30 +55,19 @@ $(".description").click(function(){
     
 });
 
-
-
-//Function to save entered text to localStorage
+// Save data into object and localStorage for persistence
 $(".container").on("click", ".saveBtn", function(){
     var id = $(this).attr("id").replace("save-", "");
-    // console.log(id);
     var desc = $("#textarea-" + id).val();
-    // console.log(desc);
 
-    if(desc.length){
-        schedule[parseInt(id)] = {
-            time: id,
-            desc: desc
-        };
-        //console.log(schedule);
+    schedule[parseInt(id)] = {
+        time: id,
+        desc: desc
+    };
 
-        localStorage.setItem("schedule", JSON.stringify(schedule));
+    localStorage.setItem("schedule", JSON.stringify(schedule));
 
-        //Hide textarea and put standard text back into description DIV
-        $("#textarea-" + id).css("visibility", "hidden");
-        $("#description-" + id).css("padding", "10px");
-        $("#description-" + id).html(desc);
-    }
-
-    // console.log(schedule);
+    $("#description-" + id).css("padding", "10px");
+    $("#description-" + id).html(desc);
 });
 
