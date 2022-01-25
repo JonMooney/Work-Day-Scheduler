@@ -19,21 +19,64 @@ for(i=9;i<=17;i++){
     }
 }
 
-
+//Dynamically create a textarea element when clicking on a description DIV
 $(".description").click(function(){
     var id = $(this).attr("id").replace("description-", "");
+
+    // $("#description-" + id).css("padding", "5px");
     
+
     if(!$("#textarea-" + id).length){
+        console.log("no textarea present");
+        $(this).html("");
         var newEl = document.createElement("textarea");
-        $(newEl).attr("id", "textarea-" + id)
+        $(newEl).attr("id", "textarea-" + id);
+        $(newEl).attr("rows", "3");
+        //$(this).html("");
         $(this).append(newEl);
+
+        for(var i=0;i<schedule.length;i++){
+            if(schedule[i].time === id){
+                console.log ("found data for this time");
+                
+                console.log(schedule[i].desc);
+                //$(this).text("");
+                $(newEl).val(schedule[i].desc);
+                
+                break;
+            }
+        }
+
+        $(newEl).css("padding", "10px");
+        $("#description-" + id).css("padding", "0");
+
         newEl.focus();
     }
+
+    
 });
 
 
 
 //Function to save entered text to localStorage
 $(".container").on("click", ".saveBtn", function(){
-    console.log($(this).attr("id"));
+    var id = $(this).attr("id").replace("save-", "");
+    // console.log(id);
+    var desc = $("#textarea-" + id).val();
+    // console.log(desc);
+
+    if(desc.length){
+        schedule.push({
+            time: id,
+            desc: desc
+        });
+
+        //Hide textarea and put standard text back into description DIV
+        $("#textarea-" + id).css("visibility", "hidden");
+        $("#description-" + id).css("padding", "10px");
+        $("#description-" + id).html(desc);
+    }
+
+    // console.log(schedule);
 });
+
