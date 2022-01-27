@@ -17,6 +17,7 @@ for(i=9;i<=17;i++){
         $("#description-" + i).html(schedule[i].desc);
     }
 
+    // Use moment JS to determine coloring of rows
     if(i < moment().hour()){
         $("#description-" + i).addClass("past");
     }else if(i == moment().hour()){
@@ -36,6 +37,8 @@ $(".description").click(function(){
         var newEl = document.createElement("textarea");
         $(newEl).attr("id", "textarea-" + id);
         $(newEl).attr("rows", "3");
+        $(newEl).attr("max-rows", "3");
+
         $(this).append(newEl);
 
         for(var i=9;i<schedule.length;i++){
@@ -66,7 +69,7 @@ $(".container").on("click", ".saveBtn", function(){
     };
 
     localStorage.setItem("schedule", JSON.stringify(schedule));
-
+    
     $("#description-" + id).css("padding", "10px");
     $("#description-" + id).html(desc);
 });
